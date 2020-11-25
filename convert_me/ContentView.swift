@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var amount = "100"
     @State private var initial_selection = 0
     @State private var second_selection = 1
+    @State private var isANumber = false
     
     var convert: Double {
         let amount_int = Double(amount) ?? 0
@@ -55,7 +56,6 @@ struct ContentView: View {
             return amount_int
         }
     }
-    
 
     
     var body: some View {
@@ -84,14 +84,25 @@ struct ContentView: View {
             .pickerStyle(SegmentedPickerStyle())
                     }
                 Section {
-                    Text("\(amount) degrees \(units_of_temp[initial_selection]) is \(convert, specifier: "%.2f") degrees \(units_of_temp[second_selection])!")
-                        .fixedSize(horizontal: false, vertical: true)
+//                    if amount == "" || isANumber == false {
+//                        Text("Please enter a number")
+//                    } else {
+                        if let _ = Int(amount) {
+                    Text("\(amount) \(units_of_temp[initial_selection]) is \n\(convert, specifier: "%.2f") \(units_of_temp[second_selection])!")
+                        .keyboardType(.decimalPad)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: false)
+                        .layoutPriority(1)
+                        } else {
+                            Text("Please enter a number")
+//                        }
+                        }
+                    }
                 }
-        .navigationBarTitle("Convert Temperatures!").font(.largeTitle)
+            }
+            .navigationBarTitle("Convert Temperatures!").font(.largeTitle)
+        }
     }
-    }
-}
-}
 }
 
 
